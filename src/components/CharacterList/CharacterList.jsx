@@ -2,7 +2,7 @@ import React from 'react';
 import { useQuery } from 'react-query';
 import { useState } from 'react';
 import { getCharacters } from '@/components/http';
-import { Grid, Typography, TextField, Select, MenuItem, FormControl } from '@mui/material';
+import { Grid, Typography, TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import CharacterCard from '../CharacterCard/CharacterCard';
 
 function CharacterList() {
@@ -49,27 +49,32 @@ function CharacterList() {
       <Typography variant="h4" gutterBottom>
         <div className="text-center">Rick and Morty Characters</div>
       </Typography>
-      <FormControl style={{ display: 'flex' }}>
-        {/* Filter input field */}
-        <TextField
-          label="Filter by name"
-          variant="outlined"
-          fullWidth
-          value={filter}
-          onChange={(e) => setFilter(e.target.value)}
-        />
-        <Select
-          labelId="gender-label"
-          label="Gender"
-          id="gender"
-          value={selectedGender}
-          onChange={handleGenderChange}
-        >
-          <MenuItem value="all">All</MenuItem>
-          <MenuItem value="male">Male</MenuItem>
-          <MenuItem value="female">Female</MenuItem>
-        </Select>
-      </FormControl>
+      <div className="flex flex-row-reverse mt-10 mb-10">
+        <FormControl>
+          {/* Filter input field */}
+          <TextField
+            label="Search"
+            variant="outlined"
+            fullWidth
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+            className='mb-10'
+          />
+
+          <Select
+            labelId="gender-label"
+            label="Gender"
+            id="gender"
+            fullWidth
+            value={selectedGender}
+            onChange={handleGenderChange}
+          >
+            <MenuItem value="all">All</MenuItem>
+            <MenuItem value="male">Male</MenuItem>
+            <MenuItem value="female">Female</MenuItem>
+          </Select>
+        </FormControl>
+      </div>
 
       <Grid container spacing={2}>
         {filteredCharacters.map((character) => (
