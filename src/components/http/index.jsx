@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 const cache = new Map();
 
 export const http = axios.create({

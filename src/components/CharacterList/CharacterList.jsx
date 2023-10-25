@@ -1,28 +1,42 @@
-import React from 'react';
-import { useQuery } from 'react-query';
-import { useState } from 'react';
-import { getCharacters } from '@/components/http';
-import { Grid, Typography, TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import { useState, useEffect } from 'react';
+import { Grid, Typography, TextField, Select, MenuItem, FormControl, CircularProgress } from '@mui/material';
 import CharacterCard from '../CharacterCard/CharacterCard';
+import { getCharacters } from '@/components/http';
+import { InputLabel } from '@mui/material';
 
 function CharacterList() {
   const [filter, setFilter] = useState('');
-  const { data, isLoading, isError } = useQuery('characters', getCharacters);
+  const [characters, setCharacters] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
   const [selectedGender, setSelectedGender] = useState('all');
 
   const handleGenderChange = (e) => {
     setSelectedGender(e.target.value);
   }
 
+  useEffect(() => {
+    const fetchCharacters = async () => {
+      try {
+        const response = await getCharacters();
+        setCharacters(response.results);
+      } catch (error) {
+        setIsError(true);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchCharacters();
+  }, []);
+
   if (isLoading) {
-    return <Typography variant="body1">Loading...</Typography>;
+    return <CircularProgress color="success" />;
   }
 
   if (isError) {
     return <Typography variant="body1">Error fetching characters</Typography>;
   }
-
-  const characters = data.results;
 
   const filteredCharacters = characters.filter((character) => {
     // Check if the character name includes the filter text (case-insensitive)
@@ -46,12 +60,8 @@ function CharacterList() {
 
   return (
     <div>
-      <Typography variant="h4" gutterBottom>
-        <div className="text-center">Rick and Morty Characters</div>
-      </Typography>
-      <div className="flex flex-row-reverse mt-10 mb-10">
-        <FormControl>
-          {/* Filter input field */}
+      <div className="flex mb-10 justify-between">
+        <FormControl className="w-1/4">
           <TextField
             label="Search"
             variant="outlined"
@@ -60,7 +70,9 @@ function CharacterList() {
             onChange={(e) => setFilter(e.target.value)}
             className='mb-10'
           />
-
+        </FormControl>
+        <FormControl className="w-1/4">
+          <InputLabel id='gender' color='primary'>Gender</InputLabel>
           <Select
             labelId="gender-label"
             label="Gender"
@@ -75,7 +87,6 @@ function CharacterList() {
           </Select>
         </FormControl>
       </div>
-
       <Grid container spacing={2}>
         {filteredCharacters.map((character) => (
           <Grid item key={character.id} xs={12} sm={6} md={4} lg={3}>
