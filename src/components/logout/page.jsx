@@ -7,7 +7,6 @@ import { signOut } from 'firebase/auth';
 import { auth } from '../firebase';
 
 function LogoutButton() {
-  const { user } = useAuthContext();
   const router = useRouter();
 
   const handleLogout = () => {
@@ -16,7 +15,7 @@ function LogoutButton() {
       .then(() => {
         // Handle successful sign-out (e.g., navigate to the login page)
         // You can use router.push or any other navigation method you prefer
-        router.push('login');
+        router.replace('/login');
       })
       .catch((error) => {
         // Handle any errors that occur during sign-out

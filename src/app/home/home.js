@@ -8,7 +8,7 @@ export default function Home() {
 
   useEffect(() => {
     if (!user) {
-      router.push('/login');
+      router.replace('/login');
     }
   }, [user, router]);
 
