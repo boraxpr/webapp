@@ -1,17 +1,12 @@
-import axios from 'axios';
 const cache = new Map();
-
-export const http = axios.create({
-  baseURL: 'https://rickandmortyapi.com/api/',
-  timeout: 10000,
-});
 
 async function get(url) {
   if (cache.has(url)) return cache.get(url);
 
-  const response = (await http.get(url)).data;
-  cache.set(url, response);
-  return response;
+  const response = await fetch(`https://rickandmortyapi.com/api/${url}`);
+  const data = await response.json();
+  cache.set(url, data);
+  return data;
 }
 
 export async function getCharacters() {

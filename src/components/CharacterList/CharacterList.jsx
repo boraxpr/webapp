@@ -3,7 +3,7 @@ import { Grid, Typography, TextField, Select, MenuItem, FormControl, CircularPro
 import CharacterCard from '../CharacterCard/CharacterCard';
 import { getCharacters } from '@/components/http';
 import { InputLabel } from '@mui/material';
-
+import LogoutButton from '../logout/logout';
 function CharacterList() {
   const [filter, setFilter] = useState('');
   const [characters, setCharacters] = useState([]);
@@ -59,7 +59,16 @@ function CharacterList() {
   });
 
   return (
-    <div>
+    <div className='mt-10'>
+      <div className='flex justify-center'>
+        <Typography variant="h2" gutterBottom color="#b2daed">
+          Rick and Morty Characters
+        </Typography>
+      </div>
+
+      <div className="flex mb-10 justify-end">
+        <LogoutButton />
+      </div>
       <div className="flex mb-10 justify-between">
         <FormControl className="w-1/4">
           <TextField
