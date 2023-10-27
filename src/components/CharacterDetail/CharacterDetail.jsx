@@ -64,16 +64,5 @@ async function CharacterDetail({ characterId }) {
     </div>
   );
 }
-export async function getServerSideProps(context) {
-  const characterId = context.params.id;
-  const characterData = await getCharacterById(characterId);
-
-  return {
-    props: {
-      character: characterData,
-    },
-  };
-}
-
 
 export default CharacterDetail;
