@@ -1,7 +1,9 @@
 import React from "react";
 import LoginForm from "@/components/loginForm/loginForm";
 import { SnackbarProvider } from "@/components/context/SnackBarContext";
-
+export const metadata = {
+  title: 'Log In - Web App',
+}
 export default function Page() {
   return (
     <SnackbarProvider>

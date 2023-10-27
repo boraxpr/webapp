@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { TextField, Typography, Snackbar, Alert } from '@mui/material';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/components/firebase';
@@ -16,15 +16,16 @@ export default function Login() {
   });
   const openSnackbar = useSnackbar();
 
-  const handleChange = (e) => {
+  const handleChange = useCallback((e) => {
     const { name, value } = e.target;
     setFormData(prevState => ({
       ...prevState,
       [name]: value,
     }));
-  };
+  }, []);
 
-  const handleSubmit = async (e) => {
+
+  const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
 
     const { email, password } = formData;
@@ -47,21 +48,13 @@ export default function Login() {
       }
       openSnackbar(errorMessage, 'error');
     }
-  };
+  }, [formData, router, openSnackbar]);
 
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <Head>
-        <title>Log In - Web App</title>
-        <meta name="description" content="Log in to your account" />
-      </Head>
       <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-        <Snackbar open={!!formData.error} autoHideDuration={6000} onClose={handleClose}>
-          <Alert onClose={handleClose} severity="error">
-            {formData.error}
-          </Alert>
-        </Snackbar>
+
         <Typography variant="h5" align="center" gutterBottom>
           Log In
         </Typography>

@@ -1,10 +1,9 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { TextField, Typography, Snackbar, Alert } from '@mui/material';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/components/firebase';
 import Link from 'next/link';
-import Head from 'next/head';
 import { useRouter } from 'next/navigation';
 import { useSnackbar } from '../context/SnackBarContext';
 
@@ -14,11 +13,15 @@ export default function Signup() {
     email: '',
     password: '',
     confirmPassword: '',
+    firstName: '',
+    lastName: '',
   });
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
+  const [passwordError, setPasswordError] = useState(false);
+  const [confirmPasswordError, setConfirmPasswordError] = useState(false);
   const openSnackbar = useSnackbar();
 
-  const handleChange = (e) => {
+  const handleChange = useCallback((e) => {
     const { name, value } = e.target;
     setFormData(prevState => ({
       ...prevState,
@@ -26,11 +29,14 @@ export default function Signup() {
     }));
 
     if (name === 'password' || name === 'confirmPassword') {
-      setIsSubmitDisabled(value !== formData[name === 'password' ? 'confirmPassword' : 'password']);
+      const passwordValid = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(value);
+      setIsSubmitDisabled(!passwordValid || value !== e.target.form[name === 'password' ? 'confirmPassword' : 'password'].value);
+      setPasswordError(!passwordValid);
+      setConfirmPasswordError(e.target.form.password.value !== e.target.form.confirmPassword.value);
     }
-  };
+  }, []);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
 
     const { email, password } = formData;
@@ -48,7 +54,7 @@ export default function Signup() {
       }
       openSnackbar(errorMessage);
     }
-  };
+  }, [formData, router, openSnackbar]);
 
 
 
@@ -70,6 +76,28 @@ export default function Signup() {
           required
         />
         <TextField
+          name="firstName"
+          type="text"
+          id="firstName"
+          label="First Name"
+          variant="outlined"
+          fullWidth
+          value={formData.firstName}
+          onChange={handleChange}
+          required
+        />
+        <TextField
+          name="lastName"
+          type="text"
+          id="lastName"
+          label="Last Name"
+          variant="outlined"
+          fullWidth
+          value={formData.lastName}
+          onChange={handleChange}
+          required
+        />
+        <TextField
           name="password"
           type="password"
           id="password"
@@ -79,6 +107,8 @@ export default function Signup() {
           value={formData.password}
           onChange={handleChange}
           required
+          error={passwordError}
+          helperText={passwordError ? 'must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number' : ''}
         />
         <TextField
           name="confirmPassword"
@@ -90,6 +120,8 @@ export default function Signup() {
           value={formData.confirmPassword}
           onChange={handleChange}
           required
+          error={confirmPasswordError}
+          helperText={confirmPasswordError ? "Password do not match." : ""}
         />
         <button
           type="submit"

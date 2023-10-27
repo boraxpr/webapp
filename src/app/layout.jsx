@@ -1,7 +1,10 @@
-import { Inter } from 'next/font/google'
+import { Open_Sans } from 'next/font/google'
 import './globals.css'
-const inter = Inter({ subsets: ['latin'] })
 
+const open_Sans = Open_Sans({
+  weight: ['400', '700'],
+  subsets: ['latin']
+})
 export const metadata = {
   title: 'Web App',
   description: 'Login and API calling',
@@ -15,7 +18,7 @@ export default function RootLayout({ children }) {
         href='/icon'
         sizes='any'
       />
-      <body className={inter.className}>
+      <body className={open_Sans.className}>
         {children}
       </body>
     </html>
