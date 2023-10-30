@@ -3,7 +3,7 @@ import Link from 'next/navigation';
 import Typography from '@mui/material/Typography';
 import LogoutButton from '@/components/logout/logout';
 import { useRouter } from 'next/navigation';
-import { useAuthContext } from '../context/AuthContext';
+import { useAuthContext } from '../../context/AuthContext';
 
 function NavBar() {
   const { user } = useAuthContext();

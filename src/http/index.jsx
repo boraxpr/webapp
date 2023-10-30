@@ -9,8 +9,16 @@ async function get(url) {
   return data;
 }
 
-export async function getCharacters() {
-  const url = 'character';
+export async function getCharacters(page, name, gender) {
+  if (!page) page = 1;
+  let url = `character/?page=${page}`;
+  if (name) {
+    url = url + `&name=${name}`;
+  }
+  if (gender !== 'all') {
+    url = url + `&gender=${gender}`
+  }
+
   return get(url);
 }
 

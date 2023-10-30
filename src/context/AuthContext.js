@@ -1,6 +1,6 @@
 'use client'
 import React from 'react';
-import { auth } from '../firebase';
+import { auth } from '../components/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 export const AuthContext = React.createContext({});
 
@@ -14,8 +14,8 @@ export const AuthContextProvider = ({
 
   React.useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      console.log("Check user: " + user)
       if (user) {
+        console.log("Check user: " + JSON.stringify(user));
         setUser(user);
       } else {
         setUser(null);

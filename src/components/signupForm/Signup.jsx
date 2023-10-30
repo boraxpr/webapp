@@ -5,7 +5,7 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/components/firebase';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useSnackbar } from '../context/SnackBarContext';
+import { useSnackbar } from '../../context/SnackBarContext';
 
 export default function Signup() {
   const router = useRouter();

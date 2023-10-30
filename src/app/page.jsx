@@ -1,4 +1,4 @@
-import { AuthContextProvider } from '@/components/context/AuthContext';
+import { AuthContextProvider } from '@/context/AuthContext';
 import Home from './home/page';
 
 export const metadata = {

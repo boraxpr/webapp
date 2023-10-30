@@ -6,7 +6,7 @@ import { auth } from '@/components/firebase';
 import Link from 'next/link';
 import Head from 'next/head';
 import { useRouter } from 'next/navigation';
-import { useSnackbar } from '../context/SnackBarContext';
+import { useSnackbar } from '../../context/SnackBarContext';
 
 export default function Login() {
   const router = useRouter();

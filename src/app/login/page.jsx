@@ -1,6 +1,6 @@
 import React from "react";
 import LoginForm from "@/components/loginForm/loginForm";
-import { SnackbarProvider } from "@/components/context/SnackBarContext";
+import { SnackbarProvider } from "@/context/SnackBarContext";
 export const metadata = {
   title: 'Log In - Web App',
 }

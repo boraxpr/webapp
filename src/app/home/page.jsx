@@ -1,8 +1,9 @@
 'use client'
 import CharacterList from "@/components/CharacterList/CharacterList";
 import { useRouter } from "next/navigation";
-import { useAuthContext } from "@/components/context/AuthContext";
+import { useAuthContext } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
+import { Button } from "@mui/material";
 
 export default function Home() {
   const { user } = useAuthContext();

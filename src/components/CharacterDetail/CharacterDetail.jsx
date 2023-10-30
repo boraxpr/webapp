@@ -1,5 +1,5 @@
 import { Card, CardContent, CardMedia, Typography, Grid, List, ListItem, ListItemText } from '@mui/material';
-import { getCharacterById } from '../http';
+import { getCharacterById } from '../../http';
 
 async function CharacterDetail({ characterId }) {
   const character = await getCharacterById(characterId);

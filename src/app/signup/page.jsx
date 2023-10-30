@@ -1,6 +1,6 @@
 import React from 'react';
 import Signup from '@/components/signupForm/Signup';
-import { SnackbarProvider } from '@/components/context/SnackBarContext';
+import { SnackbarProvider } from '@/context/SnackBarContext';
 export const metadata = {
   title: 'Sign Up - Web App',
 }
