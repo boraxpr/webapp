@@ -2,7 +2,7 @@
 import React, { useCallback, useState } from 'react';
 import { TextField, Typography, Snackbar, Alert } from '@mui/material';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '@/components/firebase';
+import { auth } from '@/components/firebase/firebase';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useSnackbar } from '../../context/SnackBarContext';

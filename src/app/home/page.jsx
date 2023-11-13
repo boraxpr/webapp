@@ -1,26 +1,12 @@
 'use client'
 import CharacterList from "@/components/CharacterList/CharacterList";
-import { useRouter } from "next/navigation";
-import { useAuthContext } from "@/context/AuthContext";
-import { useEffect, useState } from "react";
-import { Button } from "@mui/material";
-
-export default function Home() {
-  const { user } = useAuthContext();
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    if (!user) {
-      router.replace('/login');
-    } else {
-      setIsLoading(false);
-    }
-  }, [user, router]);
+import { useRequireAuth } from "@/hooks/useRequireAuth";
+import { AuthLoadingUI } from "@/components/Loading/authLoading";
+const Home = () => {
+  const { isLoading } = useRequireAuth();
 
   if (isLoading) {
-    // You can display a loading spinner or message here
-    return <div>Loading...</div>;
+    return <AuthLoadingUI />;
   }
 
   return (
@@ -29,3 +15,4 @@ export default function Home() {
     </main>
   );
 }
+export default Home;

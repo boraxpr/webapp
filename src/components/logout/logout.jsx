@@ -1,10 +1,9 @@
 'use client'
 import React from 'react';
 import Button from '@mui/material/Button';
-import { useAuthContext } from '@/context/AuthContext'; // Assuming you have an AuthContext
 import { useRouter } from 'next/navigation';
 import { signOut } from 'firebase/auth';
-import { auth } from '../firebase';
+import { auth } from '../firebase/firebase';
 
 function LogoutButton() {
   const router = useRouter();

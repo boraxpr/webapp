@@ -1,9 +1,10 @@
+'use client'
 import { useState, useEffect } from 'react';
-import { Box, Button, Grid, Typography, TextField, Select, MenuItem, FormControl, CircularProgress } from '@mui/material';
+import { InputLabel, Box, Button, Grid, Typography, TextField, Select, MenuItem, FormControl, Skeleton } from '@mui/material';
 import CharacterCard from '../CharacterCard/CharacterCard';
 import { getCharacters } from '@/http';
-import { InputLabel } from '@mui/material';
 import LogoutButton from '../logout/logout';
+
 function CharacterList() {
   const [filterName, setFilterName] = useState('');
   const [page, setPage] = useState(1);
@@ -11,10 +12,6 @@ function CharacterList() {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [selectedGender, setSelectedGender] = useState('all');
-
-  // const handleGenderChange = (e) => {
-  //   setSelectedGender(e.target.value);
-  // }
 
   useEffect(() => {
     const fetchCharacters = async () => {
@@ -110,9 +107,11 @@ function CharacterList() {
       </div>
       <Grid container spacing={2}>
         {isLoading ? (
-          <Box display="flex" justifyContent="center" width="100%">
-            <CircularProgress color="success" />
-          </Box>
+          Array.from(new Array(12)).map((_, index) => (
+            <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
+              <CharacterCardSkeleton />
+            </Grid>
+          ))
         ) : !characters || characters.length === 0 ? (
           <Typography variant="body1">There are no characters to display.</Typography>
         ) : (
@@ -153,3 +152,15 @@ function CharacterList() {
 }
 
 export default CharacterList;
+
+function CharacterCardSkeleton() {
+  return (
+    <Box sx={{ width: 210, marginRight: 0.5, marginBottom: 1 }}>
+      <Skeleton variant="rectangular" width={210} height={118} />
+      <Box sx={{ pt: 0.5 }}>
+        <Skeleton />
+        <Skeleton width="60%" />
+      </Box>
+    </Box>
+  );
+}

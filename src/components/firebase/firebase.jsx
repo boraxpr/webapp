@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from 'firebase/auth';
-
+// Handle Client Side Authentication
+// Run on app initialization
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_AUTH_DOMAIN,
@@ -10,6 +11,6 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_APP_ID,
 }
 
-const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig, 'client');
 const auth = getAuth(app);
 export { auth };

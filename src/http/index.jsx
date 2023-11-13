@@ -1,12 +1,23 @@
 const cache = new Map();
 
-async function get(url) {
+async function getRickAndMorty(url) {
   if (cache.has(url)) return cache.get(url);
 
   const response = await fetch(`https://rickandmortyapi.com/api/${url}`);
   const data = await response.json();
   cache.set(url, data);
   return data;
+}
+async function getUsersInternal(url) {
+  // No cache
+  cache.delete(url);
+  const data = await fetch('http://localhost:3000/api/users');
+  return data;
+}
+
+export async function getUsers() {
+  const url = 'users';
+  return getUsersInternal(url);
 }
 
 export async function getCharacters(page, name, gender) {
@@ -19,30 +30,30 @@ export async function getCharacters(page, name, gender) {
     url = url + `&gender=${gender}`
   }
 
-  return get(url);
+  return getRickAndMorty(url);
 }
 
 export async function getCharacterById(id) {
   const url = `character/${id}`;
-  return get(url);
+  return getRickAndMorty(url);
 }
 
 export async function getEpisodes() {
   const url = 'episode';
-  return get(url);
+  return getRickAndMorty(url);
 }
 
 export async function getEpisodeById(id) {
   const url = `episode/${id}`;
-  return get(url);
+  return getRickAndMorty(url);
 }
 
 export async function getLocations() {
   const url = 'location';
-  return get(url);
+  return getRickAndMorty(url);
 }
 
 export async function getLocationById(id) {
   const url = `location/${id}`;
-  return get(url);
+  return getRickAndMorty(url);
 }
